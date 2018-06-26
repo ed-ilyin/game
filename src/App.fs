@@ -19,7 +19,7 @@ let mutable lastTouchEnd = 0.
 
 do Browser.document.addEventListener ("touchend", !^(fun event ->
         let now = Date.Create().getTime()
-        if (now - lastTouchEnd <= 300.)
+        if (now - lastTouchEnd <= 400.)
             then do event.preventDefault ()
             else do lastTouchEnd <- now
     ), false
