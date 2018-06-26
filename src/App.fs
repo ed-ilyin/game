@@ -23,15 +23,16 @@ do Browser.document.addEventListener ("touchend", !^(fun event ->
     ), false
 )
 
-let button kind dispatch label msg =
+let button kind dispatch background label msg =
     button [
         Key label
         Class kind
+        Style [ Background background ]
         OnClick <| fun _ -> dispatch msg
     ] [ str label ]
 
-let exit dispatch label placeId =
-    button "exit" dispatch label (ChangePlace placeId)
+let exit dispatch background label placeId =
+    button "exit" dispatch background label (ChangePlace placeId)
 
 let error message = div [ Style [ Color "red" ] ] [ str message ]
 
@@ -41,12 +42,12 @@ let item items dispatch itemId =
         let begining, itemDescription, ending, msg = item.description
         ofList [
             str begining
-            button "inline" dispatch itemDescription msg
+            button "inline" dispatch "" itemDescription msg
             str ending
         ]
     | None -> sprintf "%s потерялась :(" itemId |> error
 
-let handItem dispatch itemId = button "hand" dispatch itemId ignore
+let handItem dispatch itemId = button "hand" dispatch "" itemId ignore
 
 let hands dispatch =
     function
@@ -61,9 +62,15 @@ let place dispatch model =
         [   h1 [] [ str place.name ]
             str place.description
             str " "
-            List.map (item model.items dispatch) place.items |> div []
+            List.map (item model.items dispatch) place.items |> ofList
             hr []
-            List.map (exit dispatch |> uncurry) place.exits |> div []
+            List.map (fun (direction, placeId) ->
+                let background =
+                    match Map.tryFind placeId model.places with
+                    | None -> ""
+                    | Some place -> place.background
+                exit dispatch background direction placeId
+            ) place.exits |> ofList
         ]   |> section [ Style [ Background place.background ] ]
 
 let root model dispatch =
