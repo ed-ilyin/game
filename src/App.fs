@@ -49,12 +49,7 @@ let item items dispatch itemId =
     | None -> sprintf "%s потерялась :(" itemId |> error
 
 let handItem dispatch itemId = button "hand" dispatch "" itemId ignore
-
-let hands dispatch =
-    function
-        | [] -> [ str "Налегке" ]
-        | items -> List.map (handItem dispatch) items
-    >> section []
+let hands dispatch = List.map (handItem dispatch) >> section []
 
 let place dispatch model =
     match Map.tryFind model.placeId model.places with
@@ -76,9 +71,13 @@ let place dispatch model =
 
 let root model dispatch =
     ofList [
-        section [] [ str model.status ]
+        match model.status with
+        | "" -> None | s -> section [] [ str s ] |> Some
+        |> ofOption
         place dispatch model
-        hands ignore model.hands
+        match model.hands with
+        | [] -> None | h -> hands ignore h |> Some
+        |> ofOption
     ]
 
 // App
