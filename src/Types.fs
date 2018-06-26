@@ -14,6 +14,7 @@ type Item = {
 type Place = {
     id: PlaceId
     name: string
+    background: string
     description: string
     items: ItemId list
     exits: (ExitName * PlaceId) list

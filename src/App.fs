@@ -10,8 +10,6 @@ open State
 open Fable.Core
 open Fable.Import
 open Fable.Core.JsInterop
-open Global
-let xxx = bibi
 
 type IDate = [<Emit("new $0()")>] abstract Create: unit -> JS.Date
 let [<Global>] Date: IDate = jsNative
@@ -58,7 +56,7 @@ let hands dispatch =
 
 let place dispatch model =
     match Map.tryFind model.placeId model.places with
-    | None -> [ error "я заблудился :(" ]
+    | None -> section [] [ error "я заблудился :(" ]
     | Some place ->
         [   h1 [] [ str place.name ]
             str place.description
@@ -66,8 +64,7 @@ let place dispatch model =
             List.map (item model.items dispatch) place.items |> div []
             hr []
             List.map (exit dispatch |> uncurry) place.exits |> div []
-        ]
-    |> section []
+        ]   |> section [ Style [ Background place.background ] ]
 
 let root model dispatch =
     ofList [

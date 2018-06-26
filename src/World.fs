@@ -7,16 +7,17 @@ let item name description =
         description = description
     }
 
-let place name description items exits =
+let place name background description items exits =
     {   id = name
         name = name
+        background = background
         description = description
         items = items
         exits = exits
     }
 
 let places =
-    [   place "Спуск к морю"
+    [   place "Спуск к морю" "hsl(60,60%,20%)"
             "Стопы утопают в песке пляжа. Шум волн заполняет всё \
             вокруг. Пахнет морем."
             []
@@ -24,15 +25,15 @@ let places =
                 "вдоль моря направо", "Пляж с камушками"
                 "в дюны", "Дюны"
             ]
-        place "Пляж с ракушками"
+        place "Пляж с ракушками" "hsl(200,60%,20%)"
             "Море простирается до самого горизонта."
             [ "ракушка" ]
             [ "вдоль моря направо", "Спуск к морю" ]
-        place "Пляж с камушками"
+        place "Пляж с камушками" "hsl(180,60%,20%)"
             "На севере море."
             []
             [ "вдоль моря налево", "Спуск к морю" ]
-        place "Дюны"
+        place "Дюны" "hsl(340,60%,20%)"
             "Сосны, дюны, редкая трава, а в песке сухие палочки и шишки"
             []
             [ "вниз к морю", "Спуск к морю" ]
