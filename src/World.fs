@@ -1,30 +1,45 @@
 module Game.App.World
 open Types
 
-let location name description exits =
+let item name description =
     {   id = name
         name = name
         description = description
+    }
+
+let place name description items exits =
+    {   id = name
+        name = name
+        description = description
+        items = items
         exits = exits
     }
 
-let world =
-    [   "Спуск к морю",
-            "Стопы утопают в песке пляжа. Шум волн заполняет всё
-            вокруг. Пахнет морем.",
+let places =
+    [   place "Спуск к морю"
+            "Стопы утопают в песке пляжа. Шум волн заполняет всё \
+            вокруг. Пахнет морем."
+            []
             [   "вдоль моря налево", "Пляж с ракушками"
                 "вдоль моря направо", "Пляж с камушками"
                 "в дюны", "Дюны"
             ]
-        "Пляж с ракушками", "Море простирается до самого горизонта.",
+        place "Пляж с ракушками"
+            "Море простирается до самого горизонта."
+            [ "ракушка" ]
             [ "вдоль моря направо", "Спуск к морю" ]
-        "Пляж с камушками", "На севере море.",
+        place "Пляж с камушками"
+            "На севере море."
+            []
             [ "вдоль моря налево", "Спуск к морю" ]
-        "Дюны",
-            "Сосны, дюны, редкая трава, а в песке сухие палочки и
-            шишки",
+        place "Дюны"
+            "Сосны, дюны, редкая трава, а в песке сухие палочки и шишки"
+            []
             [ "вниз к морю", "Спуск к морю" ]
-    ]   |> List.map (fun (name, description, exits) ->
-            name, location name description exits
-        )
+    ]   |> List.map (fun place -> place.id, place)
+        |> Map.ofList
+
+let items =
+    [   item "ракушка" ("Повсюду разбросаны ", "ракушки", ".", Take "ракушка")
+    ]   |> List.map (fun item -> item.id, item)
         |> Map.ofList
