@@ -14,13 +14,14 @@ let exit dispatch label locationId =
 
 let root model dispatch =
     match Map.tryFind model.locationId model.world with
-    | None -> str "я заблудился"
+    | None -> [ str "я заблудился :(" ]
     | Some location ->
         List.map (List.singleton >> section []) [
             h1 [] [ str location.name ]
             str location.description
             List.map (exit dispatch |> uncurry) location.exits |> p []
-        ]   |> div [ Style [ TextAlign "center" ] ]
+        ]
+    |> div [ Style [ TextAlign "center" ] ]
 
 
 // App
