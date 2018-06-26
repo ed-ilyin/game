@@ -33,7 +33,7 @@ let item items dispatch itemId =
         let begining, itemDescription, ending, msg = item.description
         ofList [
             str begining
-            button "" dispatch itemDescription msg
+            button "inline" dispatch itemDescription msg
             str ending
         ]
     | None -> sprintf "%s потерялась :(" itemId |> error

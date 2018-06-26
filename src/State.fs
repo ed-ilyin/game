@@ -26,7 +26,7 @@ let addItemToHands itemId model =
 let update msg model =
     match msg with
     | Take itemId ->
-        removeItemFromPlace itemId model |> addItemToHands itemId,
+        addItemToHands itemId model,
             Cmd.none
     | ChangePlace placeId ->
         { model with placeId = placeId }, Cmd.none
