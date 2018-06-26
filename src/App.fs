@@ -7,10 +7,25 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
 open State
+open Fable.Core
+open Fable.Import
+open Fable.Core.JsInterop
 
+type IDate = [<Emit("new $0($1...)")>] abstract Create: unit -> JS.Date
+let [<Global>] Date: IDate = jsNative
+let mutable lastTouchEnd = 0.
+
+do Browser.document.addEventListener ("touchend", !^(fun event ->
+        let now = Date.Create().getTime()
+        if (now - lastTouchEnd <= 500.)
+            then do event.preventDefault ()
+            else do lastTouchEnd <- now
+    ), false
+)
 
 let button kind dispatch label msg =
     button [
+        Key label
         Class kind
         // Style [
         //     // Margin "4px"
@@ -53,9 +68,9 @@ let place dispatch model =
         [   h1 [] [ str place.name ]
             str place.description
             str " "
-            List.map (item model.items dispatch) place.items|> ofList
+            List.map (item model.items dispatch) place.items |> div []
             hr []
-            List.map (exit dispatch |> uncurry) place.exits |> ofList
+            List.map (exit dispatch |> uncurry) place.exits |> div []
         ]
     |> section []
 
