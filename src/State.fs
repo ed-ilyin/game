@@ -4,7 +4,7 @@ open Types
 
 let init () =
     {   world = World.world
-        locationId = "Начало"
+        locationId = "Спуск к морю"
     }, Cmd.none
 
 let update msg model =

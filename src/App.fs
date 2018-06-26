@@ -17,10 +17,10 @@ let root model dispatch =
     | None -> str "я заблудился"
     | Some location ->
         List.map (List.singleton >> section []) [
-            str location.name
-            List.map (exit dispatch |> uncurry) location.exits
-            |> div []
-        ]   |> div []
+            h1 [] [ str location.name ]
+            str location.description
+            List.map (exit dispatch |> uncurry) location.exits |> p []
+        ]   |> div [ Style [ TextAlign "center" ] ]
 
 
 // App

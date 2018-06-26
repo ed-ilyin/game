@@ -5,6 +5,7 @@ type ExitName = string
 type Location = {
     id: LocationId
     name: string
+    description: string
     exits: (ExitName * LocationId) list
 }
 
