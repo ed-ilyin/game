@@ -42,7 +42,7 @@ let handItem dispatch itemId = button "hand" dispatch itemId ignore
 
 let hands dispatch =
     function
-        | [] -> [ str "На легке" ]
+        | [] -> [ str "Налегке" ]
         | items -> List.map (handItem dispatch) items
     >> section []
 
