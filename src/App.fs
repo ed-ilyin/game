@@ -10,30 +10,25 @@ open State
 open Fable.Core
 open Fable.Import
 open Fable.Core.JsInterop
+open Global
+let xxx = bibi
 
 type IDate = [<Emit("new $0($1...)")>] abstract Create: unit -> JS.Date
 let [<Global>] Date: IDate = jsNative
 let mutable lastTouchEnd = 0.
 
-do Browser.document.addEventListener ("touchend", !^(fun event ->
-        let now = Date.Create().getTime()
-        if (now - lastTouchEnd <= 500.)
-            then do event.preventDefault ()
-            else do lastTouchEnd <- now
-    ), false
-)
+// do Browser.document.addEventListener ("touchend", !^(fun event ->
+//         let now = Date.Create().getTime()
+//         if (now - lastTouchEnd <= 300.)
+//             then do event.preventDefault ()
+//             else do lastTouchEnd <- now
+//     ), false
+// )
 
 let button kind dispatch label msg =
     button [
         Key label
         Class kind
-        // Style [
-        //     // Margin "4px"
-        //     Background "#666"
-        //     Color "#ddd"
-        //     Display "inline-block"
-        //     Padding "8px"
-        // ]
         OnClick <| fun _ -> dispatch msg
     ] [ str label ]
 
