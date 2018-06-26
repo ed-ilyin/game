@@ -7,6 +7,7 @@ let init () =
         placeId = "Спуск к морю"
         items = World.items
         hands = []
+        status = "Одинокая девочка вышла на морской берег"
     }, Cmd.none
 
 let bindPlace placeId func model =
@@ -28,5 +29,11 @@ let update msg model =
     | Take itemId ->
         addItemToHands itemId model,
             Cmd.none
-    | ChangePlace placeId ->
-        { model with placeId = placeId }, Cmd.none
+    | Talk objectId ->
+        { model with status = sprintf "%s сказал 'кря'" objectId },
+            Cmd.none
+    | ChangePlace (placeId, placeDirection) ->
+        { model with
+            placeId = placeId
+            status = "Девочка пошла " + placeDirection + "."
+        }, Cmd.none

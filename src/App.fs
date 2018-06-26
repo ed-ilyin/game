@@ -32,7 +32,8 @@ let button kind dispatch background label msg =
     ] [ str label ]
 
 let exit dispatch background label placeId =
-    button "exit" dispatch background label (ChangePlace placeId)
+    ChangePlace (placeId, label)
+    |> button "exit" dispatch background label
 
 let error message = div [ Style [ Color "red" ] ] [ str message ]
 
@@ -75,6 +76,7 @@ let place dispatch model =
 
 let root model dispatch =
     ofList [
+        section [] [ str model.status ]
         place dispatch model
         hands ignore model.hands
     ]

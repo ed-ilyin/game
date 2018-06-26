@@ -2,7 +2,10 @@ module Game.App.Types
 type PlaceId = string
 type ExitName = string
 type ItemId = string
-type Msg = Take of ItemId | ChangePlace of PlaceId
+
+type Msg =
+    Take of ItemId | Talk of ItemId | ChangePlace of (PlaceId * string)
+
 type Description = string * ItemId * string * Msg
 
 type Item = {
@@ -25,5 +28,6 @@ type Model = {
     places: Map<PlaceId,Place>
     items: Map<ItemId,Item>
     hands: ItemId list
+    status: string
 }
 
