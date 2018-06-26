@@ -4,10 +4,10 @@ open Types
 
 let init () =
     {   places = World.places
-        placeId = "Спуск к морю"
+        placeId = "Выход к морю"
         items = World.items
         hands = []
-        status = "Одинокая девочка вышла на морской берег"
+        status = "Одинокая девочка гуляла и вышла к морю."
     }, Cmd.none
 
 let bindPlace placeId func model =
